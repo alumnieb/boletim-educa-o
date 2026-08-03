@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>De olho nos polos do EB</title>
+  <style>
+    :root {
+      --ink: #18203b;
+      --muted: #596078;
+      --paper: #f6f8ed;
+      --card: #ffffff;
+      --line: #dfe2da;
+      --green: #45a351;
+      --green-soft: #e8f2df;
+      --blue-dark: #18203b;
+      --coral: #e06031;
+      --coral-soft: #f8e8de;
+      --yellow: #fbd564;
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.58;
+    }
+
+    a { color: inherit; }
+
+    .shell {
+      width: min(1060px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 32px 0 72px;
+    }
+
+    .site-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 16px;
+    }
+
+    .site-nav a {
+      padding: 8px 13px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--blue-dark);
+      background: #fff;
+      font-size: .78rem;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .site-nav a[aria-current="page"] {
+      border-color: var(--blue-dark);
+      color: #fff;
+      background: var(--blue-dark);
+    }
+
+    .masthead {
+      position: relative;
+      overflow: hidden;
+      padding: 38px 42px 40px;
+      border-radius: var(--radius);
+      color: #f9fafb;
+      background: var(--blue-dark);
+    }
+
+    .masthead::after {
+      content: "";
+      position: absolute;
+      right: -28px;
+      bottom: -28px;
+      width: 118px;
+      height: 118px;
+      border-radius: 28px 0 0;
+      background: var(--green);
+      transform: rotate(45deg);
+    }
+
+    .masthead-brand {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 88px minmax(0, 1fr);
+      align-items: center;
+      gap: 30px;
+    }
+
+    .masthead-brand::before {
+      content: "";
+      display: block;
+      width: 88px;
+      height: 88px;
+      border-radius: 12px 12px 12px 2px;
+      background: var(--yellow);
+      clip-path: polygon(0 0, 72% 0, 100% 28%, 100% 100%, 0 100%);
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--yellow);
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 800px;
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 3.45rem);
+      letter-spacing: -.035em;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .masthead-note {
+      max-width: 690px;
+      margin: 16px 0 0;
+      color: rgba(255,255,255,.78);
+      font-size: .96rem;
+    }
+
+    .edition-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px 24px;
+      margin: 18px 0 28px;
+      padding: 0 2px 16px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: .87rem;
+    }
+
+    .edition-bar strong { color: var(--ink); }
+
+    .status { display: inline-flex; align-items: center; gap: 8px; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
+
+    .archive-panel {
+      display: grid;
+      grid-template-columns: minmax(220px, .8fr) minmax(340px, 1.2fr);
+      gap: 24px;
+      align-items: center;
+      margin: 0 0 28px;
+      padding: 20px 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    .archive-panel[hidden] { display: none; }
+    .archive-title { margin: 0 0 4px; font-size: 1rem; }
+    .archive-help { margin: 0; color: var(--muted); font-size: .82rem; }
+    .archive-controls { display: grid; gap: 10px; justify-items: end; }
+    .archive-list { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 7px; }
+
+    .archive-button {
+      padding: 7px 11px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--blue-dark);
+      background: var(--paper);
+      font: inherit;
+      font-size: .76rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .archive-button:hover,
+    .archive-button:focus-visible,
+    .archive-button.active { border-color: var(--blue-dark); color: #fff; background: var(--blue-dark); }
+    .archive-button.back { color: var(--blue-dark); background: var(--yellow); }
+
+    .archive-calendar { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: .77rem; font-weight: 700; }
+    .archive-calendar input { padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; color: var(--ink); background: #fff; font: inherit; }
+    .archive-feedback { margin: 0; color: var(--coral); font-size: .78rem; font-weight: 700; }
+
+    .territory-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .territory-card {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-top: 6px solid var(--green);
+      border-radius: var(--radius);
+      background: var(--card);
+    }
+
+    .territory-card:nth-child(3n+2) { border-top-color: var(--coral); }
+    .territory-card:nth-child(3n) { border-top-color: var(--yellow); }
+
+    .place-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px 14px;
+      margin-bottom: 18px;
+    }
+
+    .place {
+      padding: 5px 9px;
+      border-radius: 999px;
+      color: var(--blue-dark);
+      background: var(--green-soft);
+      font-size: .7rem;
+      font-weight: 900;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .scope { color: var(--muted); font-size: .75rem; font-weight: 700; }
+
+    .territory-card h2 {
+      margin: 0 0 10px;
+      font-size: clamp(1.2rem, 2vw, 1.48rem);
+      letter-spacing: -.02em;
+      line-height: 1.18;
+    }
+
+    .meta { margin: 0 0 16px; color: var(--muted); font-size: .8rem; }
+    .summary { margin: 0 0 18px; }
+
+    .radar {
+      margin: auto 0 18px;
+      padding: 14px 15px;
+      border-left: 4px solid var(--coral);
+      border-radius: 0 9px 9px 0;
+      background: var(--coral-soft);
+      font-size: .87rem;
+    }
+
+    .radar strong { display: block; margin-bottom: 3px; }
+
+    .source-link {
+      align-self: flex-start;
+      padding: 9px 13px;
+      border-radius: 9px;
+      color: #fff;
+      background: var(--blue-dark);
+      font-size: .78rem;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .source-link:hover,
+    .source-link:focus-visible { background: var(--coral); }
+
+    .empty-state {
+      padding: 42px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      text-align: center;
+      background: #fff;
+    }
+
+    footer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px 24px;
+      margin-top: 30px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: .78rem;
+    }
+
+    @media (max-width: 760px) {
+      .shell { width: min(100% - 24px, 1060px); padding-top: 18px; }
+      .masthead { padding: 30px 24px 32px; }
+      .masthead-brand { grid-template-columns: 58px minmax(0, 1fr); gap: 18px; }
+      .masthead-brand::before { width: 58px; height: 58px; }
+      .territory-grid { grid-template-columns: 1fr; }
+      .archive-panel { grid-template-columns: 1fr; }
+      .archive-controls { justify-items: start; }
+      .archive-list { justify-content: flex-start; }
+      .archive-calendar { align-items: flex-start; flex-direction: column; gap: 6px; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .shell { width: 100%; padding: 0; }
+      .site-nav, .archive-panel { display: none !important; }
+      .territory-card { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <nav class="site-nav" aria-label="Páginas do boletim">
+      <a href="./boletim-educacao.html">Brasil e mundo</a>
+      <a href="./de-olho-nos-polos.html" aria-current="page">De olho nos polos do EB</a>
+    </nav>
+
+    <header class="masthead">
+      <div class="masthead-brand">
+        <div>
+          <p class="eyebrow">Radar territorial</p>
+          <h1>De olho nos polos do EB</h1>
+          <p class="masthead-note">Notícias de educação dos territórios onde o Ensina Brasil está presente. Uma leitura curta para acompanhar decisões, oportunidades e movimentos locais.</p>
+        </div>
+      </div>
+    </header>
+
+    <div class="edition-bar">
+      <span><strong id="edition-label">Edição territorial</strong> · atualização diária</span>
+      <span class="status"><span class="status-dot"></span><span id="status-label">Conteúdo verificado</span></span>
+    </div>
+
+    <nav id="archive-panel" class="archive-panel" aria-label="Arquivo de edições territoriais" hidden>
+      <div>
+        <h2 class="archive-title">Edições anteriores</h2>
+        <p class="archive-help">As três últimas ficam à mão. Para outras datas, use o calendário.</p>
+      </div>
+      <div class="archive-controls">
+        <div id="archive-list" class="archive-list" aria-label="Três edições anteriores"></div>
+        <label class="archive-calendar" for="archive-date">
+          <span>Buscar outra edição</span>
+          <input id="archive-date" type="date" aria-describedby="archive-feedback">
+        </label>
+        <p id="archive-feedback" class="archive-feedback" role="status" hidden></p>
+      </div>
+    </nav>
+
+    <section id="empty-state" class="empty-state" hidden>
+      <h2>O radar territorial está sendo preparado</h2>
+      <p>A próxima atualização reunirá notícias dos seis territórios acompanhados.</p>
+    </section>
+
+    <section id="territory-grid" class="territory-grid" aria-live="polite"></section>
+
+    <footer>
+      <span>Vitória · Goiás · Caruaru · Pernambuco · Mato Grosso · Mato Grosso do Sul</span>
+      <span id="updated-at">Atualização automática diária</span>
+    </footer>
+  </main>
+
+  <script id="poles-data" type="application/json">
+{
+  "generatedAt": "03 de agosto de 2026, 15h04",
+  "editionDate": "2026-08-03",
+  "edition": "Edição de 3 de agosto de 2026",
+  "regions": [
+    {
+      "id": "vitoria-es",
+      "location": "Vitória",
+      "scope": "Espírito Santo",
+      "title": "Projeto de educação ambiental aproxima moradores do manguezal de Vitória",
+      "outlet": "Prefeitura de Vitória",
+      "date": "24 de julho de 2026",
+      "url": "https://www.vitoria.es.gov.br/noticia/vitoria-comemora-o-dia-mundial-do-manguezal-com-programacao-especial-56960",
+      "summary": "A programação do Dia Mundial do Manguezal reuniu atividades de sensibilização e reforçou o projeto Mangueando na Educação. Segundo a prefeitura, mais de 26 mil pessoas participaram de 891 ações educativas desde 2021. O trabalho aproxima escolas e comunidades dos ecossistemas da Baía de Vitória e da Ilha do Lameirão.",
+      "whyItMatters": "O dado permite acompanhar como a educação ambiental sai do currículo e ocupa o território. Vale observar a continuidade das atividades e a participação efetiva das escolas municipais."
+    },
+    {
+      "id": "goias",
+      "location": "Goiás",
+      "scope": "Estado",
+      "title": "Abandono escolar no ensino médio de Goiás cai 44% entre 2022 e 2025",
+      "outlet": "Folha no Sudoeste",
+      "date": "27 de junho de 2026",
+      "url": "https://www.folhanosudoeste.com.br/goias-reduz-em-44-o-abandono-escolar-no-ensino-medio-da-rede-estadual",
+      "summary": "Dados do Censo Escolar citados pela reportagem indicam que a taxa de abandono na rede estadual caiu de 1,8% para 1% entre 2022 e 2025. No mesmo período, a reprovação recuou de 3% para 1,2% e a distorção idade-série passou de 17,6% para 11,7%. Os números descrevem melhora na permanência, mas ainda pedem leitura por escola e território.",
+      "whyItMatters": "A queda é relevante para quem trabalha com permanência no ensino médio. O próximo passo é entender quais políticas contribuíram e se o avanço alcançou estudantes negros, rurais e de baixa renda na mesma proporção."
+    },
+    {
+      "id": "caruaru-pe",
+      "location": "Caruaru",
+      "scope": "Pernambuco",
+      "title": "IFPE Caruaru prorroga prazo para experiências participarem da I Mostra de Ensino",
+      "outlet": "IFPE — Campus Caruaru",
+      "date": "21 de julho de 2026",
+      "url": "https://portal.ifpe.edu.br/caruaru/noticias/prorrogada-submissao-de-trabalhos-para-a-i-mostra-de-ensino-do-ifpe/",
+      "summary": "Docentes, técnicos e estudantes do IFPE ganharam novo prazo para submeter experiências pedagógicas à I Mostra de Ensino. Os trabalhos podem tratar de inclusão, tecnologias educacionais, educação do campo, linguagens, ciências e outros quatro eixos. As propostas aprovadas serão apresentadas em setembro e publicadas nos anais do evento.",
+      "whyItMatters": "A mostra abre uma vitrine para práticas que normalmente ficam restritas a uma turma ou campus. Para Caruaru, interessa acompanhar quais experiências locais serão selecionadas e poderão circular pela rede federal."
+    },
+    {
+      "id": "pernambuco",
+      "location": "Pernambuco",
+      "scope": "Estado",
+      "title": "Rede estadual retoma aulas sob cobrança por infraestrutura escolar",
+      "outlet": "Jornal do Commercio",
+      "date": "27 de julho de 2026",
+      "url": "https://jc.uol.com.br/colunas/enem-e-educacao/2026/07/27/rede-estadual-de-pernambuco-retoma-aulas-see-tera-que-prestar-esclarecimentos-ao-mppe-sobre-infraestrutura-de-escola.html",
+      "summary": "Cerca de 500 mil estudantes de 1.085 unidades retornaram às aulas para o segundo semestre. O reinício ocorreu depois de dois incidentes estruturais em escolas estaduais, e a Secretaria de Educação deverá prestar esclarecimentos ao Ministério Público de Pernambuco. A pasta informou que acompanhará os indicadores educacionais ao longo do semestre.",
+      "whyItMatters": "O retorno coloca aprendizagem e segurança predial na mesma agenda. Acompanhar prazos de reparo e respostas ao MPPE ajuda a verificar se a rede consegue transformar a cobrança em condições concretas de ensino."
+    },
+    {
+      "id": "mato-grosso",
+      "location": "Mato Grosso",
+      "scope": "Estado",
+      "title": "Estado autoriza mais de 2,3 mil professores temporários para equipes volantes",
+      "outlet": "Poconet Notícias",
+      "date": "23 de julho de 2026",
+      "url": "https://poconet.com.br/noticia/ler/estado-contrata-mais-de-23-mil-professores-temporarios-para-equipes-volantes/45865",
+      "summary": "A contratação temporária prevê mais de 2,3 mil docentes para cobrir carências em diferentes escolas da rede estadual até dezembro. As equipes volantes não ficam fixas em uma única unidade e são deslocadas conforme a necessidade. A autorização foi formalizada em extrato publicado no Diário Oficial de 3 de julho.",
+      "whyItMatters": "A medida pode reduzir aulas vagas no curto prazo, mas também revela a dimensão da falta de docentes estáveis. É importante observar distribuição territorial, tempo de resposta e continuidade pedagógica."
+    },
+    {
+      "id": "mato-grosso-do-sul",
+      "location": "Mato Grosso do Sul",
+      "scope": "Estado",
+      "title": "Rede estadual de Mato Grosso do Sul prevê levar ferramenta de IA às escolas em agosto",
+      "outlet": "Campo Grande News",
+      "date": "3 de julho de 2026",
+      "url": "https://www.campograndenews.com.br/educacao-e-tecnologia/inteligencia-artificial-chega-as-escolas-na-2a-quinzena-de-agosto",
+      "summary": "A Secretaria de Educação informou que pretende iniciar, na segunda quinzena de agosto, a adoção do Gemini na rede estadual. A formação inicial alcançaria mil servidores, com prioridade para diretores e professores de tecnologia. Na data da reportagem, o convênio com o Google ainda não havia sido assinado.",
+      "whyItMatters": "A iniciativa pode mudar planejamento, avaliação e produção de trabalhos em sala. Formação docente, proteção de dados e regras de uso precisam avançar junto com a ferramenta."
+    }
+  ],
+  "archive": []
+}
+  </script>
+
+  <script>
+    (() => {
+      const dataNode = document.getElementById('poles-data');
+      const grid = document.getElementById('territory-grid');
+      const emptyState = document.getElementById('empty-state');
+      const editionLabel = document.getElementById('edition-label');
+      const statusLabel = document.getElementById('status-label');
+      const updatedAt = document.getElementById('updated-at');
+      const archivePanel = document.getElementById('archive-panel');
+      const archiveList = document.getElementById('archive-list');
+      const archiveDate = document.getElementById('archive-date');
+      const archiveFeedback = document.getElementById('archive-feedback');
+
+      const escapeHtml = value => String(value ?? '').replace(/[&<>'"]/g, char => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+      })[char]);
+
+      const safeUrl = value => {
+        try {
+          const url = new URL(String(value));
+          return url.protocol === 'https:' ? url.href : '#';
+        } catch { return '#'; }
+      };
+
+      let data;
+      try { data = JSON.parse(dataNode.textContent); }
+      catch { data = null; }
+
+      const render = (edition, archived = false) => {
+        const regions = Array.isArray(edition?.regions) ? edition.regions : [];
+        editionLabel.textContent = edition?.edition || 'Edição territorial';
+        statusLabel.textContent = archived ? 'Edição arquivada' : 'Conteúdo verificado';
+        updatedAt.textContent = edition?.generatedAt ? `${archived ? 'Arquivado' : 'Atualizado'} em ${edition.generatedAt}` : 'Atualização automática diária';
+        archiveDate.value = archived ? edition.editionDate : '';
+        archiveFeedback.hidden = true;
+
+        if (!regions.length) {
+          grid.hidden = true;
+          emptyState.hidden = false;
+          return;
+        }
+
+        emptyState.hidden = true;
+        grid.hidden = false;
+        grid.innerHTML = regions.map(region => `
+          <article class="territory-card">
+            <div class="place-row">
+              <span class="place">${escapeHtml(region.location)}</span>
+              <span class="scope">${escapeHtml(region.scope)}</span>
+            </div>
+            <h2>${escapeHtml(region.title)}</h2>
+            <p class="meta">${escapeHtml(region.outlet)} · ${escapeHtml(region.date)}</p>
+            <p class="summary">${escapeHtml(region.summary)}</p>
+            <div class="radar"><strong>No radar</strong>${escapeHtml(region.whyItMatters)}</div>
+            <a class="source-link" href="${safeUrl(region.url)}" target="_blank" rel="noopener noreferrer">Abrir fonte</a>
+          </article>
+        `).join('');
+
+        archiveList.querySelectorAll('[data-edition-date]').forEach(button => {
+          button.classList.toggle('active', archived && button.dataset.editionDate === edition.editionDate);
+        });
+        const backButton = document.getElementById('back-to-current');
+        if (backButton) backButton.hidden = !archived;
+      };
+
+      if (!data) {
+        render(null);
+        return;
+      }
+
+      const archivedEditions = Array.isArray(data.archive) ? data.archive : [];
+      const archiveByDate = new Map(archivedEditions.map(edition => [edition.editionDate, edition]));
+      render(data);
+
+      if (archivedEditions.length) {
+        const quickEditions = archivedEditions.slice(0, 3);
+        const archiveDates = archivedEditions.map(edition => edition.editionDate).filter(Boolean).sort();
+        archivePanel.hidden = false;
+        archiveDate.min = archiveDates[0];
+        archiveDate.max = archiveDates[archiveDates.length - 1];
+        archiveList.innerHTML = `
+          <button id="back-to-current" class="archive-button back" type="button" hidden>Voltar à edição atual</button>
+          ${quickEditions.map(edition => `<button class="archive-button" type="button" data-edition-date="${escapeHtml(edition.editionDate)}">${escapeHtml(edition.edition)}</button>`).join('')}
+        `;
+
+        archiveList.addEventListener('click', event => {
+          const button = event.target.closest('button');
+          if (!button) return;
+          if (button.id === 'back-to-current') render(data);
+          else {
+            const edition = archiveByDate.get(button.dataset.editionDate);
+            if (edition) render(edition, true);
+          }
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        archiveDate.addEventListener('change', () => {
+          if (!archiveDate.value) { render(data); return; }
+          const edition = archiveByDate.get(archiveDate.value);
+          if (edition) { render(edition, true); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+          archiveFeedback.textContent = 'Não há edição territorial arquivada nessa data.';
+          archiveFeedback.hidden = false;
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

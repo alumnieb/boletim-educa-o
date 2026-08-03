@@ -48,6 +48,30 @@
       padding: 32px 0 72px;
     }
 
+    .site-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 16px;
+    }
+
+    .site-nav a {
+      padding: 8px 13px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--blue-dark);
+      background: #fff;
+      font-size: .78rem;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .site-nav a[aria-current="page"] {
+      border-color: var(--blue-dark);
+      color: #fff;
+      background: var(--blue-dark);
+    }
+
     .masthead {
       position: relative;
       display: block;
@@ -688,6 +712,11 @@
 </head>
 <body>
   <main class="shell">
+    <nav class="site-nav" aria-label="Páginas do boletim">
+      <a href="./boletim-educacao.html" aria-current="page">Brasil e mundo</a>
+      <a href="./de-olho-nos-polos.html">De olho nos polos do EB</a>
+    </nav>
+
     <header class="masthead">
       <div class="masthead-brand">
         <div>
