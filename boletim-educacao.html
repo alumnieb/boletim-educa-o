@@ -1,0 +1,1068 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Boletim de Educação — Brasil e Mundo</title>
+  <style>
+    :root {
+      --ink: #18203b;
+      --muted: #596078;
+      --paper: #f6f8ed;
+      --card: #ffffff;
+      --line: #dfe2da;
+      --green: #45a351;
+      --green-soft: #e8f2df;
+      --blue: #273766;
+      --blue-dark: #18203b;
+      --blue-soft: #e9ebf2;
+      --coral: #e06031;
+      --coral-soft: #f8e8de;
+      --orange: #f2a943;
+      --yellow: #fbd564;
+      --spotify: #1db954;
+      --amber: #f2a943;
+      --shadow: none;
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.58;
+    }
+
+    a { color: inherit; }
+
+    .shell {
+      width: min(1060px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 32px 0 72px;
+    }
+
+    .masthead {
+      position: relative;
+      display: block;
+      overflow: hidden;
+      padding: 38px 42px 40px;
+      border-radius: 14px;
+      color: #f9fafb;
+      background: var(--blue-dark);
+      box-shadow: none;
+    }
+
+    .masthead::after {
+      content: "";
+      position: absolute;
+      right: -28px;
+      bottom: -28px;
+      width: 118px;
+      height: 118px;
+      border-radius: 28px 0 0 0;
+      background: var(--coral);
+      transform: rotate(45deg);
+    }
+
+    .masthead-brand {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 270px minmax(0, 1fr);
+      align-items: center;
+      gap: 46px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      content: url("./ensina-brasil-logo.png");
+      width: 270px;
+      height: auto;
+      flex: 0 0 auto;
+      padding: 0;
+      border-radius: 0;
+      object-fit: contain;
+      background: transparent;
+      box-shadow: none;
+      filter: brightness(0) invert(1);
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 10px;
+      color: var(--yellow);
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      display: none;
+    }
+
+    h1 {
+      max-width: 820px;
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: clamp(2rem, 5vw, 3.55rem);
+      font-weight: 700;
+      letter-spacing: -.035em;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .masthead-note {
+      position: relative;
+      z-index: 1;
+      max-width: 640px;
+      margin: 22px 0 0 316px;
+      color: rgba(255, 255, 255, .78);
+      font-size: .96rem;
+      text-align: left;
+    }
+
+    .edition-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px 24px;
+      margin: 18px 0 28px;
+      padding: 0 2px 16px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: .87rem;
+    }
+
+    .edition-bar strong { color: var(--ink); }
+
+    .archive-panel {
+      display: grid;
+      grid-template-columns: minmax(190px, .55fr) minmax(0, 1.45fr);
+      gap: 22px;
+      align-items: center;
+      margin: 0 0 30px;
+      padding: 20px 22px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    .archive-title {
+      margin: 0 0 3px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 1.16rem;
+      font-weight: 700;
+      letter-spacing: -.01em;
+    }
+
+    .archive-help {
+      margin: 0;
+      color: var(--muted);
+      font-size: .76rem;
+    }
+
+    .archive-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .archive-button {
+      min-height: 38px;
+      padding: 8px 13px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      color: var(--ink);
+      background: #fff;
+      font: inherit;
+      font-size: .76rem;
+      font-weight: 750;
+      cursor: pointer;
+      transition: transform .16s ease, border-color .16s ease, background .16s ease;
+    }
+
+    .archive-button:hover,
+    .archive-button:focus-visible {
+      transform: none;
+      border-color: var(--green);
+    }
+
+    .archive-button.active {
+      color: #fff;
+      border-color: var(--green);
+      background: var(--green);
+    }
+
+    .archive-button.back {
+      color: var(--green);
+      border-color: rgba(15, 107, 77, .35);
+      background: var(--green-soft);
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--amber);
+    }
+
+    .status-dot.ready { background: var(--green); }
+
+    .empty-state {
+      display: grid;
+      place-items: center;
+      min-height: 420px;
+      padding: 64px 24px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .empty-mark {
+      display: grid;
+      place-items: center;
+      width: 78px;
+      height: 78px;
+      margin: 0 auto 24px;
+      border-radius: 10px;
+      color: #fff;
+      background: var(--green);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 2rem;
+      box-shadow: none;
+    }
+
+    .empty-state h2 {
+      margin: 0 0 10px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -.035em;
+    }
+
+    .empty-state p {
+      max-width: 590px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.04rem;
+    }
+
+    .grid {
+      display: block;
+    }
+
+    .region-card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+
+    .region-card + .region-card { margin-top: 38px; }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 18px 30px;
+      border: 0;
+      color: var(--blue-dark);
+      background: var(--green);
+    }
+
+    .region-card.world .card-top {
+      background: var(--coral);
+    }
+
+    .region-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: .78rem;
+      font-weight: 850;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .region-code {
+      display: inline-block;
+      width: auto;
+      height: auto;
+      padding: 0 0 2px;
+      border-bottom: 3px solid currentColor;
+      border-radius: 0;
+      color: var(--blue-dark);
+      background: transparent;
+      font-size: .68rem;
+      letter-spacing: .06em;
+    }
+
+    .world .region-code { color: var(--blue-dark); background: transparent; }
+
+    .location {
+      align-self: center;
+      color: rgba(24, 32, 59, .76);
+      font-size: .78rem;
+      text-align: right;
+    }
+
+    .story { padding: 42px 46px 18px; }
+
+    .kicker {
+      margin: 0 0 11px;
+      color: var(--green);
+      font-size: .7rem;
+      font-weight: 850;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .world .kicker { color: var(--coral); }
+
+    .story h2 {
+      margin: 0 0 15px;
+      max-width: 900px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: clamp(1.75rem, 3.3vw, 2.7rem);
+      font-weight: 700;
+      letter-spacing: -.035em;
+      line-height: 1.08;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 14px;
+      margin-bottom: 22px;
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
+    .summary {
+      margin: 0;
+      max-width: 900px;
+      color: #31384e;
+      font-size: 1rem;
+    }
+
+    .insight {
+      margin: 24px 0 0;
+      padding: 17px 19px;
+      border-left: 4px solid var(--green);
+      border-radius: 0;
+      background: var(--paper);
+    }
+
+    .world .insight {
+      border-left-color: var(--coral);
+      background: var(--paper);
+    }
+
+    .insight strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: .78rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .insight p { margin: 0; }
+
+    .evidence {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      margin-top: 20px;
+    }
+
+    .evidence-box {
+      padding: 16px 0 0;
+      border: 0;
+      border-top: 4px solid var(--green);
+      border-radius: 0;
+      background: transparent;
+    }
+
+    .evidence-box + .evidence-box { border-top-color: var(--coral); }
+
+    .evidence-box h3 {
+      margin: 0 0 8px;
+      font-size: .74rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .evidence-box ul,
+    .research-grid ul {
+      margin: 0;
+      padding-left: 18px;
+      color: #465049;
+      font-size: .88rem;
+    }
+
+    .article {
+      margin: 28px 30px 24px;
+      padding: 34px 38px 38px;
+      border-radius: 12px;
+      color: #edf7f1;
+      background: var(--blue-dark);
+      clip-path: polygon(0 0, calc(100% - 34px) 0, 100% 34px, 100% 100%, 0 100%);
+    }
+
+    .world .article { background: var(--blue-dark); }
+
+    .article .kicker { color: #95d59d; }
+    .world .article .kicker { color: #f3b29a; }
+
+    .article h3 {
+      margin: 0 0 12px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 1.55rem;
+      font-weight: 700;
+      line-height: 1.18;
+    }
+
+    .citation {
+      margin: 0 0 20px;
+      color: rgba(255, 255, 255, .72);
+      font-size: .81rem;
+    }
+
+    .research-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .research-item {
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, .18);
+    }
+
+    .research-item.wide { grid-column: 1 / -1; }
+
+    .research-item h4 {
+      margin: 0 0 5px;
+      color: rgba(255, 255, 255, .68);
+      font-size: .69rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .research-item p,
+    .research-item ul {
+      margin: 0;
+      color: rgba(255, 255, 255, .9);
+      font-size: .86rem;
+    }
+
+    .research-grid ul { padding-left: 17px; }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 42px;
+      padding: 10px 15px;
+      border: 1px solid rgba(255, 255, 255, .32);
+      border-radius: 6px;
+      color: #fff;
+      font-size: .79rem;
+      font-weight: 750;
+      text-decoration: none;
+      transition: transform .16s ease, background .16s ease;
+    }
+
+    .button:hover,
+    .button:focus-visible {
+      transform: none;
+      background: rgba(255, 255, 255, .12);
+    }
+
+    .button.primary {
+      border-color: #fff;
+      color: var(--blue-dark);
+      background: #fff;
+    }
+
+    .world .button.primary { color: var(--blue); }
+
+    .podcast {
+      margin: 0 30px 30px;
+      padding: 28px 32px 30px;
+      border: 0;
+      border-radius: 12px;
+      color: var(--blue-dark);
+      background: var(--yellow);
+    }
+
+    .podcast-heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .spotify-logo {
+      display: block;
+      width: 92px;
+      height: auto;
+      flex: 0 0 auto;
+      object-fit: contain;
+    }
+
+    .podcast .kicker {
+      margin: 0;
+      color: var(--blue-dark);
+    }
+
+    .podcast h3 {
+      margin: 0 0 6px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 1.28rem;
+      font-weight: 650;
+      line-height: 1.2;
+    }
+
+    .podcast-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px 12px;
+      margin: 0 0 13px;
+      color: var(--muted);
+      font-size: .78rem;
+    }
+
+    .podcast p:last-of-type {
+      margin: 0;
+      color: #35423a;
+      font-size: .88rem;
+    }
+
+    .spotify-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      margin-top: 17px;
+      padding: 10px 16px;
+      border-radius: 6px;
+      color: #fff;
+      background: var(--blue-dark);
+      font-size: .79rem;
+      font-weight: 850;
+      text-decoration: none;
+      transition: transform .16s ease, filter .16s ease;
+    }
+
+    .spotify-button:hover,
+    .spotify-button:focus-visible {
+      transform: none;
+      filter: brightness(.96);
+    }
+
+    .story-link {
+      display: inline-flex;
+      margin-top: 19px;
+      color: var(--green);
+      font-size: .82rem;
+      font-weight: 800;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 4px;
+    }
+
+    .world .story-link { color: var(--coral); }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      margin-top: 28px;
+      padding-top: 22px;
+      border-top: 4px solid var(--blue-dark);
+      color: var(--muted);
+      font-size: .78rem;
+    }
+
+    [hidden] { display: none !important; }
+
+    @media (max-width: 900px) {
+      .masthead-brand { grid-template-columns: 250px minmax(0, 1fr); gap: 30px; }
+      .brand-mark { width: 250px; }
+      .masthead-note { margin-left: 280px; }
+    }
+
+    @media (max-width: 600px) {
+      .shell { width: min(100% - 24px, 1240px); padding-top: 28px; }
+      .masthead { padding: 28px 24px 34px; }
+      .masthead-brand { grid-template-columns: 1fr; align-items: flex-start; gap: 28px; }
+      .brand-mark { width: 250px; max-width: 88%; height: auto; padding: 0; border-radius: 0; }
+      .masthead-note { margin: 18px 52px 0 0; }
+      .archive-panel { grid-template-columns: 1fr; }
+      .archive-list { justify-content: flex-start; }
+      .story { padding: 30px 22px 12px; }
+      .article { margin: 22px 12px 16px; padding: 27px 23px 30px; }
+      .podcast { margin: 0 12px 12px; padding: 25px 23px 27px; }
+      .evidence, .research-grid { grid-template-columns: 1fr; }
+      .research-item.wide { grid-column: auto; }
+      footer { flex-direction: column; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .shell { width: 100%; padding: 0; }
+      .region-card, .empty-state { box-shadow: none; break-inside: avoid; }
+      .grid { display: block; }
+      .region-card + .region-card { margin-top: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="masthead">
+      <div class="masthead-brand">
+        <img class="brand-mark" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN0AAADkCAYAAAAcsSF/AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAACF/SURBVHhe7d13eBTXvT7w98z2ImxsJ24QlxiT5uQ++eWXm8QpDrFN76CCkEAS6h1R1CW6CRZgG2MDtgEbQ3CLHTsucZKbmxvfxJUu1HtDogk1VPac+8fuKngtQGV3dmb1/TyPHz/eWYS8O++cM+80JoQQIITIRnJ9gRDiWRQ6QmRGoSNEZhQ6QmRGoSNEZhQ6QmRGoSNEZhQ6QmRGoSNEZhQ6QmRGoSNEZhQ6QmRGoSNEZhQ6QmRGoSNEZhQ6QmRGoSNEZhQ6QmRGoSNEZhQ6QmRGoSNEZhQ6QmRGoSNEZhQ6QmRGoSNEZhQ6QmRGoSNEZhQ6QmRGoSNEZhQ6QmTGvPGoLCEEhAAEBCAAxgDGGBhjrm9VBPvvKyAAQABgAIPyfmfn5wo4/63c33U080romlvO48O/fIQ3/vAhzracx7cm3ouQ4Dn4zx99Hzqd1vXtXmWz2VBaVo0P//oR/v6PT9HY1II777gNP//pDzFj2q9x1zfugCR5f8LAOUdzy3l8/sVJ/OmvH6Gqsg7nLrTiG+Nvxw8emIiHJz2I731nAgwGvesfJTKTPXSXLrVjWVw2PvnsOPr6+iCEgCRp4OdnweKgWUhLDoNep/P6VlkIgb6+Puw/8CZ27j6Ic+cvwmazQQgBxhg0Gg1u/frNiItahOCgWdBpvbex6O7uweHX3sWzz/0OZ5rPoaenB5zbv1bGAEnSwGo14wcPTEROehwm3n8vNBrvbyhGK01+fn6+64ueYrPZkJ2/HR/+5SP09PT2T4c45+ju7sHJwhJoNRr8x/e/DY1G49Xg9fT24oX9r2Pjll1ovdTeHzgh7IG02Tja2jrw8WfHMcbPiu9+ZwIkSZL1dxZC4OLFS9i2Yz+eeuYltLScR29vLzh3TIcd/3DOcflyN2rrmvDPj4/i/gl34847blXECD0ayfapCyHQ3HIe//X3j9HT2+u6GEIIdHZexuPbX8COZ19Gd3cPZB6E+wkh0NJyHjt3H+zfOAxECIH29k6s2bADLx18Cz29V3+vuwlh34i98sb7eH7fa2hv77zu322z2VBaXoWYxDwcOXbasSFxfRfxNNlCBwAXLrSip+ergXMSQqC3tw87dx/Es8/97prv9SSbzYZ33/9vtJy9cN0VWQiBnp5ePPb4bhz83dvo67O5vsUjhOD49PMT2PrEXvT09LguvirOBc5faEVMYh4++tcRcC7P70v+TdbQccd053q6ui5j21P7vBa83t4+vPXOX1xfvqaOjk6s2fg0Dhx6C319fa6L3a6npxf7D7yJjs7OIY9WQgg0NjYjdeVGHD1eBJuNgicnWUM3FL29fXh618vY+uTea07xPIELgXPnL7q+fE1C2IPw263P4fl9r3k8eG3tHTh1urS/MBkqLgQam1qwLDYL//jfzyl4MlJs6Jz7S8/texW7nj+MbjmD5yh3hkoIgdZL7Sh4ci8OHPqDR/fxOjsvo7auaUQ/XwiB5pZzyMzbhn99cpSCJxPFhg5XlCtbtj2HnbsOorvHe+XKYDk3Fnnrn8LLh95Gr4eC19l1Gd3dg9+XuxrOBaqq6xCdkIdjjqmmB35dcgVFhw5XlCs7nj2A3c8f9so+3lA5y5VNW3bh0Ct/dHu5IoSAzY0/01muRCfm4p8fH6VyxcMUHzqnrq7LKHhiL3a/oI7gAUB7h33EO3j4bY/v442UEAINjc1IWbERx04U01TTg1QTOjjKlaeeOYBtO/bJXq4Mh3PEe6xgD/a++IbbRzx341ygoakZy2Kz8NE/v6DgeYiqQufcX9rzwqvYs/cV1QSvtbUNj29/HgcPv43eXvupb0olhMCZ5nPIytuGjz89TsHzAFWFDv3lShc2F+zBM3sOqSZ4be2dyFn7BA6+8o7ig8c5R0VVHaITcnD8ZAmVK26mutDhinLlqZ0v9Y94Suecam7Y/AwOv/Yu+hQ+gnDOce58K6ITcvDxp8eHdQiFDEyVoXPq7LqMLduex3P7XlVF8ACg3THiHTr8jirKlfqGM0hKW48Tp6hccRdVhw6OcuXJp1/CE0+/6Jhqur5DWfrLlcd3Y9+BN1VRrjQ2NiMiJgv/+zEdQHcH1YfOvr/Ugd3PH8bz+15Dj0oOoF9sbcOWrc/h0Kt/VP4+nhBoOnMWmblb8ennJ2Cz0VRzJFQfOjhW4o7OLmx6fDd2PWc/jqfklRhXbCyy87fhd6+pIHico6KyFpFxOThZSOXKSPhE6NBfrvTiiZ0v2ke8Aa7ZUxrnVHP9pp145Y33VFKuXERUfA4++ewElSvD5DOhc+rs7MLmrXscU03lBw8A2to7kZ2/HYdffVfx+3hCCNTVNyEpbX3/iEeGxudCB0e58sTTL2LHMwdUVa5s3LILLx5UR7nS0HAGETGZ+CddnTBkPhk6IQTa2jrwzJ5D2Pvi6+opVy5ewuaCPTj8+rvK38cTAo1N9nLlsy9OUrkyBD4ZOlxRrmz87S7seUE9p4y1tXUgK28bXnn9PeUHj3OUV9RiWVw2Tp0utZcrrm8iX+GzoYNz2tbbi2079mPvi6+jt1fZB6Ph+J27u3uwdtPTeP3NDxQ/deOc49y5i4iMz8FnX5wEpxHvunw6dE6djsMJL+x/Hb0qaDUBoK2tA5m5W3H4tfcUv48nhEBdXSMSlq9DYVEZTTWvY1SEDo5yZfuOfdjx7MuO2yi4vkNZhBDo7unFxt8+i5d/94cBgqes/wFnuRIenYGPPz2m+BHam0ZN6IQQuNTWgZ27D2LfS2+gp1cd5cqFi5ewccsuvPrGv/fxevv6UFhU7vp2r+NcoKGxBRm5BfjiaCGNeFcxakIHZ7nS0YUNm5/F83vtx/HUELy2tg5k5G7FS4feQnt7J744UojcdU+6vlUROOcoK69BRGyWY6pJI56rURU6XHFMbOuTe7H/wO9VVa5k52/Hjx6cD//FyWhtbXN9m2JwznH27AVExeXg8yOnaMRzMepC59TZZT+csPelN1RTrtinyO2q2VDU1DUiIXUdTlO58iWjNnRC2B8Ssu2pfXhm96EvlSucc3R1XXb9I2SIOOeob2hCeEwmPvmMyhWnURs6OEeOS+146tkD2PfiG2hrb0dHRxf++P7f0N7e6fp2MgycC9Q3NCMjdyuOHjsNG50kLd/z6YQQOHW6DAGLU3D+QqvrYq9ijEGr1eDOO27FmDFWlJVXo7OTRjp3kiQJt9w8Fi/vexzfnngvNBqN61tGjVE90jkJxz1XqqrrcfxEMQXOAzjnaDl7HlFxOThydHSPeBQ6IhshBKprGxCfuhZFxRWjtlyh0BFZcc5RV9+I8OiMUXvrBwodkR3nAnX1Z5CRW4BjJ4pG3VSTQke8gnOOktIqhEdnoqhodE01KXTEazjnaGk5h6iEHBw9fnrU3HOFQke8iguBqup6xKesQVFJ5agY8Sh0xOs456its5cro+HWDxS6IWCMYcwYKyRJAmPMdTEZAc4FauuakJFbgOMni316qkmhGwLGgG9NvBcPT/optFoNBc/NOOcoLqm0lyslvluuUOiGgHOBwtPl2LQ2DQ9P+hkkiT4+d+Oco7nlLKLic3DsRJFPjni01gwBYwwaScItt4zF09tyMXXyL0f1OYSewrlAZZW9XCkprfK5EY9CNwQajYQHf/ZDSJIEg8GA9XkpmDblVxQ8D+Cco6a2AWHRGT53ISyFbpAkScIYPyvCQ+dDYgySxPC1W8Zi8/o0TH30F7SP5wGcC9TUNiIjpwAnT5X4zFSTQjcIjDGYjAZsWpuGn/z4B/37cpIk4YYbxmD7liw8POlnFDwP4JyjqKQCYdGZKPaR43gUukEwGPRYl5eCGdMe+spUUmIMZrMRj29ajYd/TeWKJ3DOcaa5BVHxOT5xOIHWkGtgjMHPz4IntmRhwdzJVw0UYww3jb0BT2/PxZRHfvGVYJKR41ygoqoO8SlrUFpWreoRb+C1iECSGIxGAzbkp2LyIz+HVnvtIDHG7OVKfgqmPkqtpidwzlFdYy9XjhxVb7lCoRuAJEnw87NiQ34K5s56GHq9blD7apLE8PWv3YTfbliByQ/bgzqYP0cGzxm89JwCnDpdqsqpJoXORX9psi4NC+dPhVarHVJwJEnCDTeOwRMFWZj0kPPMFdd3kZHgnON0cQXCojJUeRyPQufCYNBjbW4SZk2fBO0wp4gSY7CYTdj62GpM+tVPIEnD+znk6jjnaDpjL1dOFqrrcAKFzsFZmmzdnI6F86ZAc5XSZLAYY7jpphux88l8PPTLHw9ptCSDw7lAeWUt4pLyUVZRo5or0Ee2ZvkIZ2myLi8ZUyf/Clqt1vUtw8IYg9Ggx4qUcJjNRtfFxA0456iqaUBYVAaOquShJaM+dJLE4Ge1YF1eMubPfhSGQZYmgyVJEr51/7145DcPui4ibsI5R1V1PdJzt+J0UZnip5qjOnSMMRiNRmxYk4qA+dOGXJoMlk6nQ8D8aa4vEzfinKPwdBmWRmUo/jjeqA6dXq/DmuxEzJn5yHWPw40EYwx6vc71ZeJmnHM0NjUjKiFH0YcTRmXoGGOwWs3YujkdAQumQqPx7MfgfDyX2mlUcMU85wJl5TWITcpHeWWtIssVz65tCiQxR2mSm4xpU9xXmlxLb18vfv/Wn1xfVp3vfPs+3Hbr11QQPPs+XlhUBo4dV94t3EdV6CSJwepnwdqcJCyYOxkGvd7jKxAXAqVl1XjvT//jukh1ui5fxu6n12LihHuueh6qUnDOUVlVh/ScAhQVlStqqqnsT86N+kuT/FQELpzusdLkSkIIdF/uxvYd+9HR2eW6WHXOnDmHW24eiz071+O2277m8Wn5SHHOcarQXq6UlVcrZsRT9qfmRnq9DnmZ8Zg7y7OliZMQAhdb25C8ciM++PAfitrSjoTJaMA37x2Pfbs2Yfy4Ozy+4RopzjkaGs8gKiEXhaeVcTjB50PHGIPVYsbjm1Yj0H86JBm2zkIItLV3IGfNdrz/p78r4ot2h7Fjb4DZbAJjDN/9zn04tL8A37z3GyoInn2KH5uUj8qqOq9/H55fA71IYgxGgwFrshMxY+pD0Gm18PTqwYVA66V2rMzcgrfe+Sv6+myQ6bmbHiVJDA/+9IcwGvWO/5YwbtxteLIgG+PH3aaC4Nn38ZZGZeDYce8+tMRnQ+csTfKzE7BwwVQYDJ4vTYQQaGk5j/z1T+Hd9/+Gvr4+nwgcAIwZ44d5sx/5Utur1WjwwHfvx749m3H/fXerolypqKxFek4BiosrvDbiKftTGibmGOHW5SRjUcAM+wgnQ+AuX+7G2o078PqbH6Cvzzceas8Yg9lkxJYNK/HjH33/K5+jVqvB/ffdhT3PrMdtt96sinLlZGGpo1zxzknSyv6Ehkmv1yE3Mx7z506W5TicEEBraxtSV23qn1L6CoNBj7ysBDz68M+velaNRqPBffd+A3t3P4bxd6pjqlnf0IToxFyvHE7wqdAxxmCxmLFlw0oEBcyQZbojhEB7ewdy1j6Jdz/4b9m/QE+yWi3YuGY5gvxnQKe79saLMYbvfWcCDr64Fd+8Z7wKgidQUlqFmKQ8VFXXy/q9eX6tlAljDAaDHvlZCZg5fZJjSun6LvcSQuDSpXasytqCt97+s8+UJgAwZowVa3OSMHfWw4O+7YQkSRg/7nZ7uaKSEa+isg5hURk4fqJYtqmmT4ROkhisVgvysxIQsHCafKXJ2fNYs3EH3nnvv9DrQ6WJn9WC1csjMX/OIzAaDUP6LLUaDR743kTs2/MYJtx3lyyzjZHgnKOsogbpOQUoKa2UZcRT9icyCPYRzn5YIDhwpnylSXc31m7ciVffeN9n9uGcpcnmDSuxKHAG9Hr74YGh0mo1uH/C3djz9Drc+nV1lCsnTpVgaWQGyitqPR48ZX8ag6DT6ZCTHgd/x02EPE0IoPVSO9JWP9Y/pfQVBoMeOZnxmDbllzAaDK6Lh0Sj0WDCfXdj765NGKeSqWZdvaNcKfHs4QTVho4xBrPZhN9uWIHgwJmyTGOEEGjv6EDeuifxznt/k20fQA5Wixkb8lMRHDATet3ALeVQMcbwwPfux6H9Bbjn7nGqCF5xSSViEvJQXdPgseB5fk31AGdpkpcZj9kzfgOdTqbSpK0d6dmP4/dvfehbpYmfFfk5iZg7235eqjvDYS9X7sCTBdkYd+etbv3ZnsA5R3llLcKiM3DCQw8tUV3o7KWJGbkZ8QjynyFjaXIB6zbtxB/++FefKk2sVgtWLo/AgrmTYRpiaTJYWq0GP3jgW9i7e5NqRryysmqk5xSgtKzK7cFTVeicpUleZgIWB81yjHCe/QLtpUkP1j+2E4dfe9dn9uEYYzCZjHhsXRoWB86CYZilyWBptRpMnHAPNuSnyvK9jZSNcxw/UYwlkRmoqHRvuaKq0Ol0WmSvjkHgwmnXPVjrDgLApUvtWJG+uX9K6SsMej1y0uMwY9pDMBpHVpoMllarxS8e/H8IDpylimc9cM5RW9eImMQ8FLvxcIIqQucsTTatS8PioNmylSYd7Z3I37ADb7/7V58rTdbnp2Bx0Cy3lSaDxZiE+XMehdVicl2kSNxxC/eYhDzU1Da6JXieX3tHyFma5KTHYu6sR2SZmjhLk4zcgv6Tl31lH26MnxW5mfGOKwbcW5oMBmMM9993N/z8LK6LFIs7DqCHR2eipLRqxOuCokMnOS5AzU6PRXDgLBhlKE0AoLe3DwXbX8Cbb/8Zvb2+VJqYsSIlHP4LpsJkMsryWbpizP57jB93u1f+/uHinKOkrApPPXMA3d09rouHRLGhY4zBYDQgJyMOoYvmyDLCOfX29uGDD//hM/tw9tLEgI1rliNk0WyPlybXwxjDjTeOke37dBebzYYP/vwP/OuTo66LhkSxodNptchcGW2/Hk6G0sSX6fU6ZK2Oxazpk2QrTa6nra3D9SVV6Orqwo5nX4bNNvwNsqyhkyR23a2bs8reuHY5QoPnyFKa+DKLxYR1eckIXTTnqtfDya2zswvVNfJeTuMuzscwnz17Ydi7HbKu0bfcPBYGw9WnNsxx+/Hs1bGYN+dRWaeUvsjPz4LcjHgsmDPZK6XJQJw3CVLrSAcAPd09OH+x1fXlQZMtdIwxfO2Wm/DIbx4ccIsrOS5AzV4di5BFs2UrTXyV1WLGiuRwBCyY5rXSxJUAYOM2vPP+39De0em6WDUEAD6CB5TIFjo4gpexMgqTfvUT6PU6aDQaaDQStFotTGYjcjJisWTxXBrhRsBZmqzPT0Fo8Jxrzizkxm02fH7kFF7Y/7qqSyqtRgOLxez68qAxMdyJ6QhcbL2EP773N3z0ryNobW3D+HG3Y/aM3+A////3FbEP19HRhUlTQlFT1+i6SPEMBn3/bEFJgRNCoLyiBstis1FSNvJjXd503zfvwp/efh4m0/Ae9OmV0AkhwDmHzcYhICAxCZJGGvEjh91FraGzmE32E8EDZihmHw6O77ukrAqLlqSh6cxZVRYoTnq9DmnJYUiMDR32lS1eWcsZY9BoNNDrdTDo9dDptIoJnFr5WS3ITo/FgvlTFBe4iqpaJKWtx5nmc6oOHGMMEyfcg0UBM4cdOHgrdMS9LBYTlicvRZD/DJgVUprAcRZHUXEFlkZmoLCwbETHtpTAz2pBbHQQxt54g+uiIaHQqRi74ll7S4LnKmofzmbjqK1vQmR8Niqr6tCn4sAxx71jNq1bjqmP/mrE93wZ2Z8mXqXX65CxMgrzZj867J16TxBCoKq6DuHRmaiorFP9CGc0OC6DmvoQjG7YsFHoVMpiNiE/KwFhIfMGPO7pLUIIlJVXIyAkFUXFFapuKdF/GVQqgoNmQeemy6AodCrkZ7Ugc3UM/OdPk+XhloMlhEBlVR0S09arvqWE44a7eVkJQ7rh7mBQ6FTGYjEhJXEJggNmwmxWVmlSXFKJpVEZOHWqVPVTSqvVjJUpEVg4f4rbz+ih0KmEszRZk5OEsJB5iitN6urPIDI+BxWVtaovTUwmIzatTcPiIM/cO4ZCpxI6nRar0yKxYM5kxZUm1TX1iIjJRHlFjepHOPsZPTGYOf3XHrsMikKnAmazEXlZCYhYMl9xpUl5ZS0CQlJRWFSu+tLEYjFhfV4KQhbN8ei9Yyh0Cme1mpGxMhqBC5RXmlRV1yNx+To0NrWovzTxsyI3Q557x1DoFMxiNiElYQlCgmbDbDZ5dEUYCs45SkqrsDQyHSdPlah+Smm1mJGWEoaAhfJcBkWhUyBnaZKXlYDw0PmKK03qG5oRGZ+D8spaVV+iwxiDyWjE+nz7lNITpclAKHQKpNNpsTI1Agvn2+/apRRCCNTUNiA8JhNl5dWqH+EMej0yV0VjzsyHYfJQaTIQCp3CmE1G5GbEY1nYQhgUVppUVNbZS5PTZeovTcwmrM1NwpLF8t87hkKnIFaLGatXRCHQf7osD7ccLPthgQYkpa1DQ2Oz6ksTPz8rstPjsGDuZK+UUxQ6hTCbTUiKD8WS4DmwKKw0KS2rxtLIdBw/Waz6KaXVYkZa0lIE+U+XpTQZCIXOy5jjtvG5GXGIWLpAcaVJQ2MzouJzUFZR4xOlydq8ZK/fO4ZC52U6nRYrUiIQsGAazAosTSJislBSVqX6EU6v1yF9ZRTmzXrE6+UUhc6LTCYjslfHISrc36tbXlfOqwUCQ1NxsrBU9aWJ2WxynLM6V/bSZCAUOi+xWsxYtXxZ/23jvbFvMRDnCJeUth4NDT5QmlgtyFodg4XzpnilNBkIhc4LzGYjEmJDEBYyDxaLskqTsvIaLI1Mx7ETRaq+WgAALBYzUhOX2i+D8lJpMhAKnYycpUn26jhEhimsNOEcjU0tiErIQWm5+ksT52VQS0OUde8YUOjkpdNpsTwpDEH+02E2K+dJpEII1NY2IiI2CyUllT5Rmtgvg1LWvWOcKHQyMZmMyFoVg5hlgYra8jqvFggMTcWJkyXgqi9NjMjPSkS4wi6DuhKFTgYWi/0JqMGBsxRXmtTWNSJpxXrUN5zxidIkY2U0/OdPUdQZPa4odB5mNhmREBOM8CULFFealFfUYmlkOo4eO63qfTg4LkBNVuBlUAOh0HmIszTJXBWDyHB/t9wv0V0452g6cxbRibkoKatWdeCcpUl+ViLCQpV175irodB5iE6rQWrCUgQHzoRFaaVJXROWxWahqLjcJ0qTVakRWDhviqLO6LkWCp0HmEwGZKyKQWxUkKK2vPYD340IDE3F8RPF4FzlpYnJiLzMeESELVRsaTIQCt1AGMCk4e0TWMwmpCWFISRIeaVJXX0TktLWoa6+CTaVlyZWqwWr0yIRsGCaokuTgVDoBiAxhrFjh/5kFrPJiPiYYESE+cNiMStmReCco6LSXpp8cbRQ1ftwcJxLmRwfgiWL5yq+NBkIhW4AWq0GUx/5xaC/TMYAg+NhHlERAYorTc40n0NMYh6KS6tUHTjGGIwGPfIy4hEeqqwzeoaCQjcArVaL6dN+jRtvGDOoh/9ptVqkJCzB4qDZiitN6urPYFlsFgqL1P98OL3jMij/BVNhNqujNBkIhW4AjDGMv/M2LA6aBa1W67r4S0xGAzJWRCMuOlhRW17nge/A0FQcO1Gk+tLEZDIiJyMekQq7DGo4vPLMcTUQQqC9vRMvvPg6ntlzCO3tnV8aKTQaDW666QYkxi5GkP8MRd1iwVmaJC5fj8+PnFT1lBKOG+6mJYchZNEcRV0tMFwUumsQAujr68ORY4XY//KbKC+vweXL3TCZDLjrrjuRGLMYEybc7dFbcA8V5xxV1fWIis9BcWml6gNnL01CER0RoPoRzolCN0g2mw0dnV3ovtwDo8kAi9kESVLW7JxzjubmcwiNTMfp02Wqvh6OMQa9Xoe8rAQEzJ+qqKsyRopC5yOcU8rYpHwcOVao+n04vV6HFSkRiAxb6LGn53gLhc4HOAMXGLoc1TX1sNnUfeDbZDIiY2UUlgTPVdQJBu6irPkRGTIhBOobziApbQNqahtUHzir4zKoRf4zfTJwoJFO3TjnqK5pQFR8DopKKnygNDEiKS5UcRf6uhuFTqU452huOY+lUek4VViq6sA5S5OcjDgELpyuqBMMPIGmlyp17vxFRMZl48TJElUHDv33jrHftcvXAwcKnToJIdDcfN7RUqp7H85kNCBzVQxilinrMihPotCplBBC9aWJxWLG8uQwLA703dJkIBQ64hUmkxHx0YsQqbDLoORAoSOyYozBoNcjY2U0osJ959SuoaDQEVnpdFokJy5BSNAsWCy+X5oMhEJHZGM0GpCxMgrxUYtG5QjnRKEjsnA+zGNx0OxRVZoMhEJHPM5kMiI2MghREQGwjrLSZCAUOuIxjAF6vR6r0yIRs0xZ947xJgod8RitVofk+FCEBs+BxWJ2XTxqUeiIRxiNBqSviEJCTDCNcC4odMTtLI5bLIQuotJkIBQ64lYmkxExkUGIiQyE1UqlyUAodMQt7KWJDqtSlyEmMhBGg2/dYsGdKHTELbRaHRJjQ7Bk8RxYqTS5JgodGTGj0YBVy5chKS7E524i5AkUOjIiFrOpf4Sj0mRwKHRk2ExGA6IiAhAXFQQ/q4UCN0gUOjJkztJkRWo44qIW0ZRyiCh0ZMi0Wi0SYoIRFjIfViuVJkNFoSNDYjTosSo1AknxoTTCDROFjgya2WxCQsxiLAmZB71OR/tww0ShI4NiMhoQFe6P+JhgKk1GiEJHrslZmixPCkN8dDBNKd2AQkeuSavVIi5qESKWLqDSxE0odOSqDAY90pLDkZKwhEY4N6LQkQGZHfelDA+dD72eShN3otCRrzAaDYgM90dibAj8/Kg0cTcKHenHAOh1WqQmLEF8DJUmnkKhI/20Wi1iIoOwLNwfVovFdTFxEwqdKjG3T/kMBj1Sk5ZieVIYTEYD3PzjyRUodCrEGGAyGSBJ7vn6zCYjYiMDEbF0AZUmMnDPt0ZkZzQacPPNN444IEajARFLFyA5fgnG+FlH/PPI9VHoVMrPz4KJ9909opDodFokx4UgMZau+JYThU6lTEYDJj/6y2GHTqvVIjoiAFERgbBaqTSRE4VOpTQaDRYHzcQvf/4jaLUa18XXZDDokZIQirSUcJhMVJrIjUKnUowx6PV65KTH4Zv3fgNardb1LQMym02IjghAZLg/DHr9sEdKMnxMCCFcXyTqIYRAc8s5pK7ahI8/PY7u7u6vPIucMQatVoNbbh6LsJB5iAz3p304L6LQ+YgLF1rx2RcnsWfvq/jk0+Pgwh48BgajyQD/+VMREjQL99wzHrpBjorEMyh0PkIIQEBAcIGzZ8+jvvEMWlvbcPvtX8fdd42D3nF7PJpOeh+FzgcJIfDvr5VBkihoSkKhI0Rm1F4SIjMKHSEyo9ARIjMKHSEyo9ARIjMKHSEyo9ARIjMKHSEyo9ARIjMKHSEyo9ARIjMKHSEyo9ARIjMKHSEyo9ARIjMKHSEyo9ARIjMKHSEyo9ARIrP/A939IGmh4csRAAAAAElFTkSuQmCC" alt="Ensina Brasil">
+        <div>
+          <p class="eyebrow">Boletim de educação</p>
+          <h1>Educação em perspectiva</h1>
+        </div>
+      </div>
+      <p class="masthead-note">Brasil e mundo. Duas notícias, dois estudos e dois episódios para começar o dia com mais contexto.</p>
+    </header>
+
+    <div class="edition-bar">
+      <span><strong id="edition-label">Próxima edição</strong> · diariamente às 8h</span>
+      <span class="status"><span id="status-dot" class="status-dot"></span><span id="status-label">Aguardando o primeiro boletim</span></span>
+    </div>
+
+    <nav id="archive-panel" class="archive-panel" aria-label="Arquivo de edições" hidden>
+      <div>
+        <h2 class="archive-title">Edições anteriores</h2>
+        <p class="archive-help">Abra um boletim completo sem sair desta página.</p>
+      </div>
+      <div id="archive-list" class="archive-list"></div>
+    </nav>
+
+    <section id="empty-state" class="empty-state">
+      <div>
+        <div class="empty-mark">E</div>
+        <h2>Seu boletim está a caminho</h2>
+        <p>A primeira edição será preparada automaticamente às 8h, com duas notícias, seus artigos acadêmicos de acesso aberto e episódios relacionados no Spotify.</p>
+      </div>
+    </section>
+
+    <section id="daily-content" class="grid" hidden aria-live="polite"></section>
+
+    <footer>
+      <span>Uma leitura diária sobre educação no Brasil e no mundo.</span>
+      <span id="updated-at">Atualização automática diária</span>
+    </footer>
+  </main>
+
+  <script id="bulletin-data" type="application/json">
+{
+  "generatedAt": "03 de agosto de 2026, 09h03",
+  "editionDate": "2026-08-03",
+  "edition": "Edição de 3 de agosto de 2026",
+  "brazil": {
+    "location": "Brasil",
+    "news": {
+      "title": "UniCuidotecas selecionará até 50 universidades para acolhimento infantil noturno",
+      "outlet": "Ministério da Educação (MEC)",
+      "date": "27 de julho de 2026",
+      "url": "https://www.gov.br/mec/pt-br/assuntos/noticias/2026/julho/inscricao-de-cuidotecas-nas-federais-vai-ate-sabado-1o",
+      "summary": "Até 50 universidades federais poderão abrir espaços gratuitos de acolhimento infantil no período noturno. A seleção faz parte do UniCuidotecas, iniciativa conjunta do MEC e do Ministério do Desenvolvimento e Assistência Social. As unidades receberão crianças de 3 a 12 anos, inclusive com deficiência, enquanto seus responsáveis estudam ou trabalham na universidade. Cada espaço poderá atender 40 crianças, em geral das 17h às 23h, com possibilidade de funcionar também nos fins de semana e nas férias. O governo financiará a implantação e o primeiro ano de operação. As inscrições terminaram em 1º de agosto; agora, as propostas serão avaliadas.",
+      "whyItMatters": "Para quem cuida de uma criança, assistir a uma aula à noite depende de ter com quem deixá-la. As Cuidotecas atacam essa barreira diretamente. O teste virá depois: oferecer atendimento seguro, manter equipes qualificadas e encontrar recursos para o programa continuar após o primeiro ano.",
+      "confirmedFacts": [
+        "A chamada prevê selecionar até 50 universidades federais.",
+        "As Cuidotecas atenderão gratuitamente crianças de 3 a 12 anos, com ou sem deficiência.",
+        "Cada unidade poderá acolher até 40 crianças ao mesmo tempo, prioritariamente das 17h às 23h.",
+        "Os recursos federais cobrirão implantação e funcionamento por 12 meses; a universidade deverá oferecer o espaço físico."
+      ],
+      "analysis": [
+        "Ainda não há universidades selecionadas nem resultados sobre frequência ou evasão.",
+        "O foco no turno noturno deixa sem resposta parte da demanda diurna.",
+        "Qualidade do cuidado, acessibilidade e financiamento após os 12 meses serão decisivos."
+      ]
+    },
+    "article": {
+      "title": "Maternidade e ensino superior: o papel da universidade e as estratégias de permanência adotadas pelas estudantes-mães da Universidade de Brasília",
+      "citation": "Pereira, Camila Rafaelle Santiago; Barroso, Eloísa Pereira. História Oral, 28(3), 57–72, 2025. DOI: 10.51880/ho.v28i3.1545.",
+      "question": "Como a função de cuidado, as relações de gênero e as redes de apoio interferem na trajetória acadêmica de estudantes-mães da Universidade de Brasília?",
+      "method": "Estudo de história oral com entrevistas de seis estudantes-mães beneficiárias de auxílios-creche, integrado a dados institucionais de perfil, uso do benefício e rendimento das 62 pessoas ativas no Programa Auxílio Creche no segundo semestre de 2023.",
+      "findings": [
+        "Entre 26 estudantes que tiveram o primeiro filho durante o curso, a queda média de carga horária aprovada foi maior do que o aumento observado entre aquelas cujo rendimento cresceu.",
+        "Falta de rede de apoio, horários inflexíveis, puerpério, cansaço, adoecimento mental e doença da criança apareceram como obstáculos à permanência.",
+        "58,06% dos arranjos familiares eram compostos por mulheres com filhos e somente 9,25% das estudantes recebiam pensão alimentícia.",
+        "As entrevistadas apontaram demanda por espaços de acolhimento infantil, prioridade de matrícula em horários compatíveis e campi mais preparados para receber crianças."
+      ],
+      "limitations": [
+        "As entrevistas abrangem apenas seis estudantes de uma única universidade e não representam todas as experiências de parentalidade no ensino superior.",
+        "A análise quantitativa é descritiva e restrita a beneficiários do auxílio-creche, sem grupo de comparação que permita atribuir efeitos causais ao programa.",
+        "O estudo não mede diretamente evasão nem demonstra se espaços de acolhimento, isoladamente, melhoram rendimento ou conclusão."
+      ],
+      "connection": "Nas entrevistas da UnB, mães estudantes pedem exatamente o que o programa propõe: um lugar seguro para os filhos durante as aulas. O artigo lembra, porém, que a permanência também depende de horários flexíveis, renda e apoio psicológico.",
+      "pdf": "./2026-08-03_BR_maternidade-ensino-superior.pdf",
+      "doiUrl": "https://doi.org/10.51880/ho.v28i3.1545",
+      "sourceUrl": "https://www.revista.historiaoral.org.br/index.php/rho/article/view/1545"
+    },
+    "podcast": {
+      "title": "EDUCAST Temp.02 Ep.03 - GT Maternidades na Faced",
+      "show": "Educast — FACED/UFRGS",
+      "date": "22 de julho de 2024",
+      "duration": "30 min 21 s",
+      "language": "Português",
+      "whyListen": "Professoras e estudantes da UFRGS contam como maternidade e universidade se cruzam na vida real. A conversa ajuda a enxergar o problema antes da política: falta de tempo, rede de apoio e espaço para crianças no campus.",
+      "spotifyUrl": "https://open.spotify.com/episode/6R6Rv5kXVorHO2VJS13O8V"
+    }
+  },
+  "world": {
+    "location": "Inglaterra, Reino Unido",
+    "news": {
+      "title": "Inglaterra inicia mês de ônibus gratuitos para crianças de 5 a 15 anos",
+      "outlet": "Department for Transport — GOV.UK",
+      "date": "1º de agosto de 2026 (início; anúncio em 10 de julho)",
+      "url": "https://www.gov.uk/government/news/schools-out-free-bus-travel-for-kids-set-to-launch-in-summer-holiday-cost-of-living-boost",
+      "summary": "Durante agosto, crianças de 5 a 15 anos poderão viajar de graça nos ônibus locais participantes da Inglaterra. A gratuidade vai até 31 de agosto e faz parte de um pacote para reduzir o custo das férias escolares. O governo calcula que cada viagem infantil costuma custar entre £1 e £2 e espera facilitar o acesso a parques, museus e atividades de férias. Menores de 5 anos já não pagam nas principais operadoras. O pacote mantém ainda a tarifa máxima de £3 para adultos até março de 2027. Como a adesão depende das empresas de ônibus, a cobertura não será igual em todo o país.",
+      "whyItMatters": "Uma passagem pode decidir se uma criança chega a uma biblioteca, um museu ou uma atividade de reforço. A tarifa zero remove esse custo, mas não resolve sozinha o acesso: é preciso ter linha, frequência e horário compatíveis.",
+      "confirmedFacts": [
+        "O benefício vigora de 1º a 31 de agosto de 2026 para pessoas de 5 a 15 anos.",
+        "A viagem gratuita é oferecida nos ônibus locais participantes da Inglaterra.",
+        "O governo estima que tarifas infantis normalmente custam de £1 a £2.",
+        "A medida integra o pacote Great British Summer Savings; o teto de £3 para viagens simples de adultos segue até março de 2027."
+      ],
+      "analysis": [
+        "A medida começa agora; ainda não há dados independentes sobre uso ou economia para as famílias.",
+        "Ela vale apenas nas férias e não substitui políticas de transporte escolar.",
+        "Em áreas mal servidas ou com empresas fora do programa, o efeito tende a ser menor."
+      ]
+    },
+    "article": {
+      "title": "The influence of poverty on children’s school experiences: pupils’ perspectives",
+      "citation": "Naven, Lynn; Sosu, Edward M.; Spencer, Sara; Egan, James. Journal of Poverty and Social Justice, 27(3), 313–331, 2019. DOI: 10.1332/175982719X15622547838659.",
+      "question": "Como políticas e práticas escolares afetam a experiência e a participação de estudantes de famílias de baixa renda?",
+      "method": "Pesquisa-ação participativa com 282 estudantes de 8 a 18 anos em quatro escolas primárias e duas secundárias de Glasgow. Foram realizados 71 grupos de discussão, apoiados por uma vinheta fictícia, e os registros passaram por análise temática dedutiva no NVivo.",
+      "findings": [
+        "Estudantes identificaram custos de transporte, uniforme, materiais, alimentação, viagens e atividades como barreiras distribuídas ao longo de todo o dia escolar.",
+        "Quem não recebia transporte gratuito relatou gastos semanais de £6 a £10 até os 16 anos e de £12 a £16 entre os mais velhos.",
+        "Alguns estudantes caminhavam até 45 minutos; participantes relataram faltas quando a família não podia pagar a passagem.",
+        "Regras que limitavam o passe a horários ou distâncias específicas dificultavam clubes, reforço após a aula e atividades durante as férias."
+      ],
+      "limitations": [
+        "As seis escolas formaram uma amostra de conveniência de uma única cidade escocesa, limitando a generalização para toda a Inglaterra.",
+        "Os grupos de discussão registram experiências e percepções, não estimam causalmente o efeito da gratuidade sobre frequência ou aprendizagem.",
+        "A coleta ocorreu em 2014 e utilizou uma personagem fictícia para tratar de pobreza; respostas podem refletir hipóteses, dinâmica do grupo e políticas daquele período."
+      ],
+      "connection": "O estudo escocês registra faltas e abandono de atividades por falta de dinheiro para a passagem. Ele sustenta a lógica da gratuidade, mas mostra que regras de horário, distância e cobertura podem manter crianças do lado de fora.",
+      "pdf": "./2026-08-03_MUNDO_pobreza-experiencias-escolares.pdf",
+      "doiUrl": "https://doi.org/10.1332/175982719X15622547838659",
+      "sourceUrl": "https://eprints.gla.ac.uk/192030/"
+    },
+    "podcast": {
+      "title": "When the School Bus Doesn’t Come: One Family’s Saga",
+      "show": "P.S. Weekly — Chalkbeat + The Bell",
+      "date": "4 de junho de 2026",
+      "duration": "23 min 7 s",
+      "language": "Inglês",
+      "whyListen": "Uma família de Nova York conta o que acontece quando o ônibus escolar simplesmente não chega. O episódio mostra que passagem gratuita e serviço confiável são problemas diferentes, e que ambos afetam a presença na escola.",
+      "spotifyUrl": "https://open.spotify.com/episode/6rTx20lF3adSTL4aWfKZol"
+    }
+  },
+  "archive": [
+    {
+      "generatedAt": "02 de agosto de 2026, 22h19",
+      "editionDate": "2026-08-02",
+      "edition": "Edição de 2 de agosto de 2026",
+      "brazil": {
+        "location": "Brasil",
+        "news": {
+          "title": "Pnae integra conjunto de ações voltadas à segurança alimentar",
+          "outlet": "FNDE / Ministério da Educação",
+          "date": "28 de julho de 2026",
+          "url": "https://www.gov.br/fnde/pt-br/assuntos/noticias-1/pnae-integra-conjunto-de-acoes-voltadas-a-seguranca-alimentar",
+          "summary": "O relatório global de 2026 mantém o Brasil fora do Mapa da Fome, usado quando menos de 2,5% da população enfrenta subnutrição crônica. Ao comentar o resultado, o FNDE destaca o alcance do PNAE: cerca de 39 milhões de estudantes, em 145 mil escolas, recebem quase 50 milhões de refeições por dia letivo. Pelas regras atuais, ao menos 85% dos recursos devem financiar alimentos in natura ou minimamente processados; processados e ultraprocessados ficam limitados a 10%. Desde 2026, a agricultura familiar deve receber pelo menos 45% dos repasses. O FNDE relaciona o programa à alimentação regular, à frequência e à permanência na escola.",
+          "whyItMatters": "Para milhões de estudantes, a merenda é parte da condição de aprender. O dado nacional é positivo, mas esconde diferenças entre territórios e famílias. Cobertura, qualidade da refeição e acesso dos estudantes mais vulneráveis precisam ser lidos juntos.",
+          "confirmedFacts": [
+            "O relatório global de 2026 mantém o Brasil abaixo do limiar de 2,5% de subnutrição crônica.",
+            "O PNAE atende aproximadamente 39 milhões de estudantes em cerca de 145 mil escolas públicas.",
+            "A regra divulgada pelo FNDE reserva ao menos 85% dos recursos a alimentos in natura ou minimamente processados.",
+            "Desde 2026, a compra direta da agricultura familiar deve receber pelo menos 45% dos recursos do programa."
+          ],
+          "analysis": [
+            "O Mapa da Fome retrata o país como um todo; não mostra a situação de cada escola.",
+            "Os números vêm do órgão responsável pelo programa e descrevem alcance e regras, não uma avaliação independente.",
+            "O estudo ajuda a aproximar a lente: insegurança alimentar ainda aparece dentro da escola."
+          ]
+        },
+        "article": {
+          "title": "Segurança alimentar e alimentação escolar: consumo e comportamento alimentar de estudantes de uma instituição federal de ensino",
+          "citation": "Aragi, Juliana Cesário; Bandoni, Daniel Henrique. Ciência & Saúde Coletiva, 31(5), 2026. DOI: 10.1590/1413-81232026315.08982024.",
+          "question": "Como a insegurança alimentar se relaciona ao consumo da alimentação escolar e ao comportamento alimentar de estudantes do ensino médio, técnico e da EJA?",
+          "method": "Estudo transversal com 702 estudantes de todos os campi de uma instituição federal de São Paulo. Utilizou questionário, teste qui-quadrado de Pearson e regressão logística multinomial ajustada por fatores sociodemográficos.",
+          "findings": [
+            "49,86% dos participantes viviam em domicílios com algum nível de insegurança alimentar.",
+            "O consumo diário da alimentação escolar foi mais frequente entre estudantes em insegurança alimentar, indicando que a refeição escolar alcança grupos mais vulneráveis.",
+            "Não tomar café da manhã e não consumir marcadores de alimentação saudável também se associaram aos níveis de insegurança alimentar.",
+            "Os autores defendem diagnósticos mais detalhados para orientar políticas institucionais com maior equidade."
+          ],
+          "limitations": [
+            "O desenho transversal identifica associações, mas não demonstra que a alimentação escolar causou mudanças na segurança alimentar.",
+            "A pesquisa foi respondida pelos próprios estudantes, o que pode subestimar ou superestimar condições alimentares do domicílio.",
+            "O questionário foi aplicado online e a amostra veio de uma única instituição federal, limitando a generalização para todo o país."
+          ],
+          "connection": "O FNDE mostra o tamanho do PNAE. O artigo mostra quem mais depende dele: estudantes em insegurança alimentar e com menos alternativas fora da escola.",
+          "pdf": "./2026-08-02_BR_pnae-seguranca-alimentar.pdf",
+          "doiUrl": "https://doi.org/10.1590/1413-81232026315.08982024",
+          "sourceUrl": "https://www.scielo.br/j/csc/a/GgbYTRPGjCrMKG55ts5VXSS/"
+        },
+        "podcast": {
+          "title": "Episódio 2 - Alimentação Escolar, um direito fundamental",
+          "show": "Diário de Classe — INCT Gestrado",
+          "date": "9 de julho de 2025",
+          "duration": "24 min 19 s",
+          "language": "Português",
+          "whyListen": "Lígia Amparo percorre a história do PNAE e liga merenda, saúde, cultura e agricultura familiar. É uma boa continuação para quem quer entender por que o programa vai muito além do prato servido.",
+          "spotifyUrl": "https://open.spotify.com/episode/1choFQV0bLcKlOyEnpp0Wn"
+        }
+      },
+      "world": {
+        "location": "Estados Unidos",
+        "news": {
+          "title": "Escolas enfrentam salas e pátios cada vez mais quentes sem infraestrutura suficiente",
+          "outlet": "The Conversation, republicado pelo The Washington Post",
+          "date": "27 de julho de 2026",
+          "url": "https://www.washingtonpost.com/ripple/2026/07/27/its-getting-hotter-in-classrooms-and-on-playgrounds-schools-arent-ready-to-handle-extreme-temperatures/",
+          "summary": "Escolas dos Estados Unidos estão voltando às aulas em pleno verão, muitas sem ar-condicionado, sombra ou plano para dias extremos. O texto parte dos 47 °C registrados em Phoenix e reúne pesquisas sobre o efeito do calor na rotina escolar. Em dias acima de 32 °C, as faltas podem subir 16%; provas feitas sob calor também registram notas menores. Mesmo entre distritos com climatização, 41% precisam atualizar ou trocar os sistemas, segundo estimativa federal citada pelas autoras. As propostas incluem rever calendários, criar áreas internas frescas, ampliar a sombra e adaptar prédios e pátios.",
+          "whyItMatters": "Calor em sala de aula não é mero desconforto. Ele afeta saúde, presença e aprendizagem, e pesa mais onde a infraestrutura já é frágil. Adaptar a escola ao clima virou uma questão de equidade.",
+          "confirmedFacts": [
+            "Diversos distritos dos EUA começam o ano letivo durante julho ou agosto, meses de calor intenso em várias regiões.",
+            "A matéria reúne estudos que associam calor a mais faltas, menor desempenho em provas e riscos de adoecimento.",
+            "O texto informa que 41% dos distritos com climatização precisam atualizar ou substituir seus sistemas.",
+            "Escolas e governos já adotam medidas como sombra, árvores, mudanças em atividades e limites de temperatura."
+          ],
+          "analysis": [
+            "O texto reúne pesquisas existentes; não apresenta um novo levantamento nacional.",
+            "Ar-condicionado ajuda, mas traz custos de energia e manutenção.",
+            "Escolas com menos recursos tendem a sofrer mais, ampliando desigualdades já conhecidas."
+          ]
+        },
+        "article": {
+          "title": "Heat and Learning",
+          "citation": "Park, R. Jisung; Goodman, Joshua; Hurwitz, Michael; Smith, Jonathan. American Economic Journal: Economic Policy, 12(2), 306–339, 2020. DOI: 10.1257/pol.20180612.",
+          "question": "A exposição cumulativa ao calor durante o ano escolar reduz a aprendizagem, e o ar-condicionado nas escolas consegue atenuar esse efeito?",
+          "method": "Modelos com efeitos fixos por estudante ligaram 21 milhões de resultados de quase 10 milhões de alunos que repetiram o PSAT, das turmas de 2001 a 2014, a dados meteorológicos diários. Pesquisas com estudantes e orientadores estimaram a climatização em cerca de 12 mil escolas.",
+          "findings": [
+            "Sem ar-condicionado, um ano escolar 1 °F mais quente reduziu em cerca de 1% o aprendizado obtido naquele ano.",
+            "Dias letivos acima de 90 °F foram especialmente prejudiciais; calor em fins de semana e férias teve pouco efeito, reforçando o mecanismo ligado ao tempo de instrução.",
+            "Os padrões observados indicam que a climatização escolar neutraliza grande parte do dano causado pelo calor.",
+            "O impacto foi desproporcional sobre estudantes negros e hispânicos e respondeu por aproximadamente 5% da diferença racial de desempenho estimada no estudo."
+          ],
+          "limitations": [
+            "Os alunos que repetiram o PSAT eram, em média, um pouco mais favorecidos do que o conjunto de participantes, o que limita a representatividade.",
+            "A identificação causal pressupõe que a variação de temperatura entre anos não esteja correlacionada a outros determinantes não observados da aprendizagem.",
+            "Parte da medida de climatização é autorrelatada e observada em um único momento; melhorias de ar-condicionado podem coincidir com outras reformas escolares.",
+            "Os resultados vêm do ensino médio nos Estados Unidos e não devem ser transferidos automaticamente para outros países ou faixas etárias."
+          ],
+          "connection": "A reportagem mostra o problema na escola; o estudo mede a perda de aprendizagem. Juntos, apontam que climatização, sombra e edifícios adaptados são parte da política educacional.",
+          "pdf": "./2026-08-02_MUNDO_heat-and-learning.pdf",
+          "doiUrl": "https://doi.org/10.1257/pol.20180612",
+          "sourceUrl": "https://open.bu.edu/items/e81e78d3-d9a9-4dd7-b8ac-b2539cbd46c5"
+        },
+        "podcast": {
+          "title": "Ep 4: Climate Education in Schools (A High School Teacher's Experience)",
+          "show": "Teaching in a Climate Crisis",
+          "date": "6 de outubro de 2021",
+          "duration": "43 min 55 s",
+          "language": "Inglês",
+          "whyListen": "Um professor com 32 anos de sala de aula conta como a crise climática já aparece no cotidiano escolar. O episódio sai da infraestrutura e chega à prática: como conversar sobre o tema e envolver estudantes.",
+          "spotifyUrl": "https://open.spotify.com/episode/1WIeQO9gvEM79PBsEDXRBN"
+        }
+      }
+    }
+  ]
+}
+  </script>
+
+  <script>
+    (() => {
+      const dataNode = document.getElementById('bulletin-data');
+      let data;
+      try {
+        data = JSON.parse(dataNode.textContent);
+      } catch (error) {
+        document.getElementById('status-label').textContent = 'Não foi possível carregar esta edição';
+        return;
+      }
+
+      const now = new Date();
+      const today = [
+        now.getFullYear(),
+        String(now.getMonth() + 1).padStart(2, '0'),
+        String(now.getDate()).padStart(2, '0')
+      ].join('-');
+      const minuteOfDay = now.getHours() * 60 + now.getMinutes();
+      const waitingForToday = data.editionDate !== today && minuteOfDay >= 480 && minuteOfDay < 540;
+      if (waitingForToday) setTimeout(() => window.location.reload(), 60_000);
+
+      if (!data.brazil || !data.world) return;
+
+      const escapeHtml = (value = '') => String(value)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+
+      const safeUrl = (value = '') => {
+        const url = String(value).trim();
+        return /^(https?:|file:|\.\/)/i.test(url) ? escapeHtml(url) : '#';
+      };
+
+      const list = (items = []) => `<ul>${items.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`;
+
+      const renderPodcast = (podcast = {}) => {
+        if (!podcast.title || !podcast.spotifyUrl) return '';
+        const details = [podcast.show, podcast.date, podcast.duration, podcast.language]
+          .filter(Boolean)
+          .map(value => `<span>${escapeHtml(value)}</span>`)
+          .join('');
+        return `
+          <section class="podcast">
+            <div class="podcast-heading">
+              <img class="spotify-logo" src="./spotify-logo-black.png" alt="Spotify">
+              <p class="kicker">Episódio no Spotify</p>
+            </div>
+            <h3>${escapeHtml(podcast.title)}</h3>
+            <div class="podcast-meta">${details}</div>
+            <p>${escapeHtml(podcast.whyListen)}</p>
+            <a class="spotify-button" href="${safeUrl(podcast.spotifyUrl)}" target="_blank" rel="noopener noreferrer">Ouvir episódio no Spotify</a>
+          </section>`;
+      };
+
+      const renderCard = (item, type) => {
+        const isWorld = type === 'world';
+        const regionName = isWorld ? 'Mundo' : 'Brasil';
+        const regionCode = isWorld ? 'GL' : 'BR';
+        const article = item.article || {};
+        const news = item.news || {};
+        return `
+          <article class="region-card ${isWorld ? 'world' : ''}">
+            <div class="card-top">
+              <div class="region-label"><span class="region-code">${regionCode}</span>${regionName}</div>
+              <span class="location">${escapeHtml(item.location || regionName)}</span>
+            </div>
+            <div class="story">
+              <p class="kicker">A notícia</p>
+              <h2>${escapeHtml(news.title)}</h2>
+              <div class="meta"><span>${escapeHtml(news.outlet)}</span><span>${escapeHtml(news.date)}</span></div>
+              <p class="summary">${escapeHtml(news.summary)}</p>
+              <div class="insight"><strong>Por que importa</strong><p>${escapeHtml(news.whyItMatters)}</p></div>
+              <div class="evidence">
+                <div class="evidence-box"><h3>Fatos confirmados</h3>${list(news.confirmedFacts)}</div>
+                <div class="evidence-box"><h3>Análise e contexto</h3>${list(news.analysis)}</div>
+              </div>
+              <a class="story-link" href="${safeUrl(news.url)}" target="_blank" rel="noopener noreferrer">Abrir notícia original →</a>
+            </div>
+            <section class="article">
+              <p class="kicker">Para ler</p>
+              <h3>${escapeHtml(article.title)}</h3>
+              <p class="citation">${escapeHtml(article.citation)}</p>
+              <div class="research-grid">
+                <div class="research-item"><h4>Pergunta</h4><p>${escapeHtml(article.question)}</p></div>
+                <div class="research-item"><h4>Método</h4><p>${escapeHtml(article.method)}</p></div>
+                <div class="research-item wide"><h4>Principais achados</h4>${list(article.findings)}</div>
+                <div class="research-item"><h4>Limitações</h4>${list(article.limitations)}</div>
+                <div class="research-item"><h4>O que o estudo acrescenta</h4><p>${escapeHtml(article.connection)}</p></div>
+              </div>
+              <div class="actions">
+                <a class="button primary" href="${safeUrl(article.pdf)}" target="_blank" rel="noopener noreferrer">Ler PDF</a>
+                <a class="button" href="${safeUrl(article.doiUrl)}" target="_blank" rel="noopener noreferrer">Ver DOI</a>
+                <a class="button" href="${safeUrl(article.sourceUrl)}" target="_blank" rel="noopener noreferrer">Fonte acadêmica</a>
+              </div>
+            </section>
+            ${renderPodcast(item.podcast)}
+          </article>`;
+      };
+
+      const content = document.getElementById('daily-content');
+      const editionLabel = document.getElementById('edition-label');
+      const statusDot = document.getElementById('status-dot');
+      const statusLabel = document.getElementById('status-label');
+      const updatedAt = document.getElementById('updated-at');
+      const archivePanel = document.getElementById('archive-panel');
+      const archiveList = document.getElementById('archive-list');
+      const archivedEditions = Array.isArray(data.archive) ? data.archive : [];
+
+      const showEdition = (edition, archived = false) => {
+        if (!edition?.brazil || !edition?.world) return;
+        content.innerHTML = renderCard(edition.brazil, 'brazil') + renderCard(edition.world, 'world');
+        content.hidden = false;
+        editionLabel.textContent = edition.edition || 'Edição do boletim';
+        statusDot.classList.add('ready');
+        statusLabel.textContent = archived
+          ? 'Edição arquivada'
+          : (waitingForToday ? 'Atualizando a edição de hoje…' : 'Edição disponível');
+        updatedAt.textContent = edition.generatedAt
+          ? `${archived ? 'Arquivado' : 'Atualizado'} em ${edition.generatedAt}`
+          : (archived ? 'Edição anterior' : 'Atualizado hoje');
+        archiveList.querySelectorAll('[data-edition-date]').forEach(button => {
+          button.classList.toggle('active', button.dataset.editionDate === edition.editionDate);
+        });
+        const backButton = document.getElementById('back-to-current');
+        if (backButton) backButton.hidden = !archived;
+      };
+
+      if (archivedEditions.length) {
+        archivePanel.hidden = false;
+        archiveList.innerHTML = `
+          <button id="back-to-current" class="archive-button back" type="button" hidden>Voltar à edição atual</button>
+          ${archivedEditions.map((edition, index) => `
+            <button class="archive-button" type="button" data-edition-date="${escapeHtml(edition.editionDate)}" data-archive-index="${index}">
+              ${escapeHtml(edition.edition || edition.editionDate)}
+            </button>`).join('')}`;
+        archiveList.addEventListener('click', event => {
+          const button = event.target.closest('button');
+          if (!button) return;
+          if (button.id === 'back-to-current') {
+            showEdition(data, false);
+          } else if (button.dataset.archiveIndex !== undefined) {
+            showEdition(archivedEditions[Number(button.dataset.archiveIndex)], true);
+          }
+          document.querySelector('.edition-bar').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      }
+
+      document.getElementById('empty-state').hidden = true;
+      showEdition(data, false);
+    })();
+  </script>
+</body>
+</html>
