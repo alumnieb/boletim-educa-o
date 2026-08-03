@@ -1,0 +1,10 @@
+# O boletim é uma página de texto; mídias e documentos ficam em fontes externas.
+*.pdf
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.gif
+*.mp3
+*.wav
+*.mp4
