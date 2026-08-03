@@ -144,6 +144,18 @@
 
     .edition-bar strong { color: var(--ink); }
 
+    .criteria-note {
+      margin: -12px 0 28px;
+      padding: 13px 16px;
+      border-left: 4px solid var(--green);
+      border-radius: 0 9px 9px 0;
+      color: var(--muted);
+      background: var(--green-soft);
+      font-size: .82rem;
+    }
+
+    .criteria-note strong { color: var(--ink); }
+
     .status { display: inline-flex; align-items: center; gap: 8px; }
     .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
 
@@ -262,6 +274,13 @@
     .source-link:hover,
     .source-link:focus-visible { background: var(--coral); }
 
+    .no-source {
+      align-self: flex-start;
+      color: var(--muted);
+      font-size: .78rem;
+      font-weight: 800;
+    }
+
     .empty-state {
       padding: 42px;
       border: 1px solid var(--line);
@@ -323,6 +342,8 @@
       <span><strong id="edition-label">Edição territorial</strong> · atualização diária</span>
       <span class="status"><span class="status-dot"></span><span id="status-label">Conteúdo verificado</span></span>
     </div>
+
+    <p class="criteria-note"><strong>Critério editorial:</strong> notícias recentes e inéditas em relação a todo o arquivo. Quando não houver uma novidade confiável para um território, a página informa a ausência em vez de repetir conteúdo antigo.</p>
 
     <nav id="archive-panel" class="archive-panel" aria-label="Arquivo de edições territoriais" hidden>
       <div>
@@ -473,7 +494,9 @@
 
         emptyState.hidden = true;
         grid.hidden = false;
-        grid.innerHTML = regions.map(region => `
+        grid.innerHTML = regions.map(region => {
+          const hasNews = region.status !== 'no-update' && safeUrl(region.url) !== '#';
+          return `
           <article class="territory-card">
             <div class="place-row">
               <span class="place">${escapeHtml(region.location)}</span>
@@ -483,9 +506,12 @@
             <p class="meta">${escapeHtml(region.outlet)} · ${escapeHtml(region.date)}</p>
             <p class="summary">${escapeHtml(region.summary)}</p>
             <div class="radar"><strong>No radar</strong>${escapeHtml(region.whyItMatters)}</div>
-            <a class="source-link" href="${safeUrl(region.url)}" target="_blank" rel="noopener noreferrer">Abrir fonte</a>
+            ${hasNews
+              ? `<a class="source-link" href="${safeUrl(region.url)}" target="_blank" rel="noopener noreferrer">Abrir fonte</a>`
+              : '<span class="no-source">Sem notícia nova nesta edição</span>'}
           </article>
-        `).join('');
+        `;
+        }).join('');
 
         archiveList.querySelectorAll('[data-edition-date]').forEach(button => {
           button.classList.toggle('active', archived && button.dataset.editionDate === edition.editionDate);
