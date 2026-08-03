@@ -181,6 +181,44 @@
       gap: 8px;
     }
 
+    .archive-controls {
+      display: grid;
+      gap: 12px;
+      justify-items: end;
+    }
+
+    .archive-calendar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: .76rem;
+      font-weight: 700;
+    }
+
+    .archive-calendar input {
+      min-height: 38px;
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      color: var(--ink);
+      background: #fff;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .archive-calendar input:focus-visible {
+      outline: 3px solid rgba(69, 163, 81, .24);
+      outline-offset: 2px;
+      border-color: var(--green);
+    }
+
+    .archive-feedback {
+      margin: 0;
+      color: var(--coral);
+      font-size: .76rem;
+    }
+
     .archive-button {
       min-height: 38px;
       padding: 8px 13px;
@@ -629,6 +667,8 @@
       .masthead-brand::before { width: 64px; height: 64px; font-size: 1.15rem; }
       .archive-panel { grid-template-columns: 1fr; }
       .archive-list { justify-content: flex-start; }
+      .archive-controls { justify-items: start; }
+      .archive-calendar { align-items: flex-start; flex-direction: column; gap: 6px; }
       .story { padding: 30px 22px 12px; }
       .article { margin: 22px 12px 16px; padding: 27px 23px 30px; }
       .podcast { margin: 0 12px 12px; padding: 25px 23px 27px; }
@@ -666,9 +706,16 @@
     <nav id="archive-panel" class="archive-panel" aria-label="Arquivo de edições" hidden>
       <div>
         <h2 class="archive-title">Edições anteriores</h2>
-        <p class="archive-help">Abra um boletim completo sem sair desta página.</p>
+        <p class="archive-help">Os três últimos boletins ficam à mão. Para datas anteriores, use o calendário.</p>
       </div>
-      <div id="archive-list" class="archive-list"></div>
+      <div class="archive-controls">
+        <div id="archive-list" class="archive-list" aria-label="Três edições anteriores"></div>
+        <label class="archive-calendar" for="archive-date">
+          <span>Buscar outra edição</span>
+          <input id="archive-date" type="date" aria-describedby="archive-feedback">
+        </label>
+        <p id="archive-feedback" class="archive-feedback" role="status" hidden></p>
+      </div>
     </nav>
 
     <section id="empty-state" class="empty-state">
@@ -1019,7 +1066,10 @@
       const updatedAt = document.getElementById('updated-at');
       const archivePanel = document.getElementById('archive-panel');
       const archiveList = document.getElementById('archive-list');
+      const archiveDate = document.getElementById('archive-date');
+      const archiveFeedback = document.getElementById('archive-feedback');
       const archivedEditions = Array.isArray(data.archive) ? data.archive : [];
+      const archiveByDate = new Map(archivedEditions.map(edition => [edition.editionDate, edition]));
 
       const showEdition = (edition, archived = false) => {
         if (!edition?.brazil || !edition?.world) return;
@@ -1036,16 +1086,25 @@
         archiveList.querySelectorAll('[data-edition-date]').forEach(button => {
           button.classList.toggle('active', button.dataset.editionDate === edition.editionDate);
         });
+        archiveDate.value = archived ? edition.editionDate : '';
+        archiveFeedback.hidden = true;
         const backButton = document.getElementById('back-to-current');
         if (backButton) backButton.hidden = !archived;
       };
 
       if (archivedEditions.length) {
+        const quickEditions = archivedEditions.slice(0, 3);
+        const archiveDates = archivedEditions
+          .map(edition => edition.editionDate)
+          .filter(Boolean)
+          .sort();
         archivePanel.hidden = false;
+        archiveDate.min = archiveDates[0];
+        archiveDate.max = archiveDates[archiveDates.length - 1];
         archiveList.innerHTML = `
           <button id="back-to-current" class="archive-button back" type="button" hidden>Voltar à edição atual</button>
-          ${archivedEditions.map((edition, index) => `
-            <button class="archive-button" type="button" data-edition-date="${escapeHtml(edition.editionDate)}" data-archive-index="${index}">
+          ${quickEditions.map(edition => `
+            <button class="archive-button" type="button" data-edition-date="${escapeHtml(edition.editionDate)}">
               ${escapeHtml(edition.edition || edition.editionDate)}
             </button>`).join('')}`;
         archiveList.addEventListener('click', event => {
@@ -1053,10 +1112,25 @@
           if (!button) return;
           if (button.id === 'back-to-current') {
             showEdition(data, false);
-          } else if (button.dataset.archiveIndex !== undefined) {
-            showEdition(archivedEditions[Number(button.dataset.archiveIndex)], true);
+          } else if (button.dataset.editionDate) {
+            const edition = archiveByDate.get(button.dataset.editionDate);
+            if (edition) showEdition(edition, true);
           }
           document.querySelector('.edition-bar').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+        archiveDate.addEventListener('change', () => {
+          if (!archiveDate.value) {
+            showEdition(data, false);
+            return;
+          }
+          const edition = archiveByDate.get(archiveDate.value);
+          if (edition) {
+            showEdition(edition, true);
+            document.querySelector('.edition-bar').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            return;
+          }
+          archiveFeedback.textContent = 'Não há boletim arquivado nessa data.';
+          archiveFeedback.hidden = false;
         });
       }
 
