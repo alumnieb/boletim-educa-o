@@ -667,14 +667,28 @@
     .world .story-link { color: var(--coral); }
 
     footer {
-      display: flex;
-      justify-content: space-between;
-      gap: 24px;
+      display: grid;
+      gap: 10px;
       margin-top: 28px;
       padding-top: 22px;
       border-top: 4px solid var(--blue-dark);
       color: var(--muted);
       font-size: .78rem;
+    }
+
+    .footer-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px 24px;
+    }
+
+    .footer-credit { margin: 0; }
+
+    .footer-credit a {
+      color: var(--blue-dark);
+      font-weight: 700;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
     }
 
     [hidden] { display: none !important; }
@@ -698,7 +712,7 @@
       .podcast { margin: 0 12px 12px; padding: 25px 23px 27px; }
       .evidence, .research-grid { grid-template-columns: 1fr; }
       .research-item.wide { grid-column: auto; }
-      footer { flex-direction: column; }
+      .footer-meta { flex-direction: column; }
     }
 
     @media print {
@@ -759,8 +773,11 @@
     <section id="daily-content" class="grid" hidden aria-live="polite"></section>
 
     <footer>
-      <span>Uma leitura diária sobre educação no Brasil e no mundo.</span>
-      <span id="updated-at">Atualização automática diária</span>
+      <div class="footer-meta">
+        <span>Uma leitura diária sobre educação no Brasil e no mundo.</span>
+        <span id="updated-at">Atualização automática diária</span>
+      </div>
+      <p class="footer-credit">Criado por <a href="https://www.linkedin.com/in/viniciuspradop/" target="_blank" rel="noopener noreferrer">Vinícius Prado Pereira</a> — Alumni Ensina 2023</p>
     </footer>
   </main>
 

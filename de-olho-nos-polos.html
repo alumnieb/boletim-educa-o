@@ -290,15 +290,29 @@
     }
 
     footer {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 8px 24px;
+      display: grid;
+      gap: 10px;
       margin-top: 30px;
       padding-top: 18px;
       border-top: 1px solid var(--line);
       color: var(--muted);
       font-size: .78rem;
+    }
+
+    .footer-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px 24px;
+    }
+
+    .footer-credit { margin: 0; }
+
+    .footer-credit a {
+      color: var(--blue-dark);
+      font-weight: 700;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
     }
 
     @media (max-width: 760px) {
@@ -311,6 +325,7 @@
       .archive-controls { justify-items: start; }
       .archive-list { justify-content: flex-start; }
       .archive-calendar { align-items: flex-start; flex-direction: column; gap: 6px; }
+      .footer-meta { flex-direction: column; }
     }
 
     @media print {
@@ -369,8 +384,11 @@
     <section id="territory-grid" class="territory-grid" aria-live="polite"></section>
 
     <footer>
-      <span>Vitória · Goiás · Caruaru · Pernambuco · Mato Grosso · Mato Grosso do Sul</span>
-      <span id="updated-at">Atualização automática diária</span>
+      <div class="footer-meta">
+        <span>Vitória · Goiás · Caruaru · Pernambuco · Mato Grosso · Mato Grosso do Sul</span>
+        <span id="updated-at">Atualização automática diária</span>
+      </div>
+      <p class="footer-credit">Criado por <a href="https://www.linkedin.com/in/viniciuspradop/" target="_blank" rel="noopener noreferrer">Vinícius Prado Pereira</a> — Alumni Ensina 2023</p>
     </footer>
   </main>
 
